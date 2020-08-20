@@ -1,7 +1,10 @@
 class Api::V1::ProductsController < ApplicationController
+
+    require 'tempfile'
+
     def index
         products = Product.order(created_at: :desc)
-        render json: products
+        render(json: products, each_serializer: ProductSerializer )
     end
 
     def show
@@ -10,8 +13,12 @@ class Api::V1::ProductsController < ApplicationController
     end
 
     def create
+        file = Tempfile.new('temp');
         product = Product.new params.require(:product).permit(:name, :description, :price, :weight, :stock, :image)
-
+        file.write(params[:image])
+        product.image.attach(io: file, filename: 'temp.jpeg', content_type: 'image/jpeg')
+        file.rewind
+        
         if product.save
             render(json: { id: product.id })
           else
@@ -35,19 +42,12 @@ class Api::V1::ProductsController < ApplicationController
         end
     end
 
-    def edit
-        id = params[:id]
-        product = Product.find(id)
-        render json: product
-    end
-
     def update
-        id = params[:id]
-        product = Product.find(id)
+        product = Product.find(params[:id])
         if product.update(params.require(:product).permit(:name, :description, :price, :weight, :stock, :image))
           render json: product
         else
-          render :edit
+          render :errors
         end
     end
 end

@@ -11,5 +11,6 @@ export const Session = {
       },
       body: JSON.stringify(params),
     }).then((res) => res.json());
-  },
+  }
+  
 };
