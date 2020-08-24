@@ -7,7 +7,13 @@ Rails.application.routes.draw do
       resources :products, only: [:index, :show, :create, :update, :destroy]
       resources :orders, only: [:index, :show, :create, :update, :destroy]
       resources :users, only: [:index, :show, :create, :update, :destroy]
-      resource :session, only: [:create, :destroy]
+
+      get "/session", to: "sessions#index"
+
+      post "/session", to: "sessions#createCart"
+
+      # resource :session, only: [:create, :destroy]
+
     end
   end
 end

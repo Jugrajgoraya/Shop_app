@@ -10,18 +10,24 @@ export const ProductForm = (props) => {
     handleChange = props.onCreateProduct;
   }
 
-  let updateProduct = { name: "", description: "" };
+  let updateProduct = { name: "", description: "", price:"", weight:"", stock:"" };
   let ProductPlaceholder = { ...updateProduct };
 
   if (props.Product) {
     updateProduct = {
       name: props.Product.name,
-      description: props.Product.description
+      description: props.Product.description,
+      price: props.Product.price,
+      weight: props.Product.weight,
+      stock: props.Product.stock
     };
   } else {
     ProductPlaceholder = {
       name: "Enter Product name",
-      description: "Enter Product description"
+      description: "Enter Product description",
+      price: "Enter Product price",
+      weight: "Enter Product weight",
+      stock: "Enter Product current stock"
     };
   }
   return (
@@ -38,6 +44,17 @@ export const ProductForm = (props) => {
           id="name"
           defaultValue={updateProduct.name}
           placeholder={ProductPlaceholder.name}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="price">Price</label>
+        {/* <FormErrors errors={props.errors} forField="name" /> */}
+        <input
+          type="number"
+          name="price"
+          id="price"
+          defaultValue={updateProduct.price}
+          placeholder={ProductPlaceholder.price}
         />
       </div>
       <div className="field">
@@ -59,6 +76,28 @@ export const ProductForm = (props) => {
             name="image" 
             id="image" 
             />
+      </div>
+      <div className="field">
+        <label htmlFor="weight">Weight</label>
+        {/* <FormErrors errors={props.errors} forField="name" /> */}
+        <input
+          type="text"
+          name="weight"
+          id="weight"
+          defaultValue={updateProduct.weight}
+          placeholder={ProductPlaceholder.weight}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="stock">Stock</label>
+        {/* <FormErrors errors={props.errors} forField="name" /> */}
+        <input
+          type="text"
+          name="stock"
+          id="stock"
+          defaultValue={updateProduct.stock}
+          placeholder={ProductPlaceholder.stock}
+        />
       </div>
       <button className="ui right floated large orange button" type="submit">
         {props.buttonMessage}

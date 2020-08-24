@@ -8,15 +8,15 @@ export const ProductDetails = (props) => {
         <h2>{name}</h2>
         <button>{price} $</button>
         <br/>
-        <img src={image}/>
+        <img src={image} height="500px" width="500px"/>
         <p>
-            {description}
+          {description}
         </p>
         <p>
-        <small>
-          Created at {created_at.toLocaleString()} 
-        </small>
-      </p>
+          <small>
+            Created at {created_at.toLocaleString()} 
+          </small>
+        </p>
     </div>
   );
 };

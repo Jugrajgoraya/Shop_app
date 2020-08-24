@@ -7,26 +7,51 @@ import { ProductNew } from './ownerPages/ProductNew'
 import { ProductShow } from './ownerPages/ProductShow'
 import { ProductEdit } from './ownerPages/ProductEdit'
 
+import { NavBar2 } from './CustomerPages.js/components.js/Navbar2'
+import { ProductIndex2 } from './CustomerPages.js/ProductIndex2'
+import { Cart } from './CustomerPages.js/Cart'
+import { ProductShow2 } from './CustomerPages.js/ProductShow2'
+
+const user = "customer"
+
 function App() {
-  return (
-    <BrowserRouter>
-  
-      <Switch>
-        <>
-        <header>
+
+
+  if(user == "admin"){
+    return (
+      <BrowserRouter>
+        <header className="ui header">
           <NavBar />
-        </header> 
+        </header>
         <div className="ui container App">
-          <Route exact path="/" component={WelcomePage} />
-          <Route exact path="/products" component={ProductIndex} />
-          <Route exact path="/products/new" component={ProductNew} />
-          <Route path="/products/:id/edit" component={ProductEdit}/>
-          <Route path="/products/:id" component={ProductShow} />
+        <Switch>
+            <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/products" component={ProductIndex} />
+            <Route exact path="/products/new" component={ProductNew} />
+            <Route exact path="/products/:id/edit" component={ProductEdit}/>
+            <Route exact path="/products/:id" component={ProductShow} />
+        </Switch>
         </div>
-        </>
-      </Switch>
-  </BrowserRouter>
-  );
-}
+    </BrowserRouter>
+    );
+  }
+  if(user == "customer"){
+    return (
+      <BrowserRouter>
+        <header className="ui header">
+          <NavBar2 />
+        </header>
+        <div className="ui container App">
+        <Switch>
+            <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/products" component={ProductIndex2} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/products/:id" component={ProductShow2} />
+        </Switch>
+        </div>
+    </BrowserRouter>
+    );
+  }
+  }
 
 export default App;

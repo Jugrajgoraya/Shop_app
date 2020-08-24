@@ -13,24 +13,15 @@ export const ProductEdit = props => {
   const updateProduct = event => {
     event.preventDefault();
     const { currentTarget } = event;
-    const fd = new FormData();
+    const fd = new FormData(currentTarget);
+    const Id = props.match.params.id
 
-    fd.append('name', currentTarget.name.value )
-    fd.append('description', currentTarget.description.value)
-    fd.append('image',currentTarget.image.files[0])
-
-    const updatedProduct = {
-      name: fd.get("name"),
-      description: fd.get("description"),
-      image: fd.get("image")
-    };
-
-    Product.update(props.match.params.id, updatedProduct).then(data => {
+    Product.update(Id, fd).then(data => {
       console.log(data)
       if (data.errors) {
         setErrors(data.errors);
       } else {
-        props.history.push(`/Products/${data.id}`);
+        props.history.push(`/products/${Id}`);
       }
     });
   };

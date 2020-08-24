@@ -12,4 +12,28 @@ class Api::V1::SessionsController < ApplicationController
       def destroy
         session[:user_id] = null;
       end
+
+      def createCart
+        if session[:cart_items] == nil 
+          session[:cart_items] = []
+        else
+          cart_items = session[:cart_items]
+          cart_items << params[:id]
+          session[:cart_items] = cart_items
+        end
+        products = Product.where(id: cart_items)
+
+        render json: products
+      end
+
+      def index
+        cart_items = session[:cart_items]
+        products = Product.where(id: cart_items)
+        render json: products 
+      end
+
+      def updateCart
+        
+      end
+
 end

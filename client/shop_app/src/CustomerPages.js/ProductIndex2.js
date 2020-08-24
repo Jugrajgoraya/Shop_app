@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { Product } from "../api/product";
-import { Spinner } from "./components/Spinner";
+import { Spinner } from "../ownerPages/components/Spinner";
+import { Session } from '../api/session'
 
-export class ProductIndex extends Component {
+export class ProductIndex2 extends Component {
   constructor(props) {
 
     super(props);
@@ -14,22 +15,19 @@ export class ProductIndex extends Component {
     };
   }
 
+  addToCart(cliked_item){
+    Session.createCart(cliked_item).then((data) => {
+        console.log(data)
+        this.props.history.push(`/cart`);
+    })
+  }
+
   componentDidMount() {
     Product.all().then((products) => {
       this.setState({ products, isLoading: false });
-      console.log(products)
     });
   }
 
-  deleteProduct(id) {
-
-    this.setState((state, props) => {
-      return {
-        products: state.products.filter((q) => q.id !== id),
-      };
-    });
-
-  }
   render() {
     console.log(this.state.products)
     if (this.state.isLoading) {
@@ -40,20 +38,21 @@ export class ProductIndex extends Component {
         <h2 className="ui horizontal divider header">Products</h2>
         <ul className="ui list">
           {this.state.products.map((product) => (
-            <Link to={`/products/${product.id}`} >
               <div key={product.id} className="ui raised clearing segment">
                 <h3 className="ui header">
                   {product.name}
                 </h3>
                 <img src= {product.image} height="100px" width="100px"/>
+                <Link to={`/products/${product.id}`} >
+                    <button className="ui right floated small green button">More Datails </button>
+                </Link>
                 <button
-                  className="ui right floated small red button"
-                  onClick={() => this.deleteProduct(product.id)}
+                  className="ui right floated small orange button"
+                  onClick={() => this.addToCart(product)}
                 >
-                  Delete
+                  Add to Cart
                 </button>
               </div>
-            </Link>
           ))}
         </ul>
       </main>

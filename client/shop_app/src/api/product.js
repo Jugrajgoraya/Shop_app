@@ -3,13 +3,13 @@ import { baseUrl } from "./config";
 export const Product = {
   all() {
     return fetch(`${baseUrl}/products`, {
-      credentials: "include",
+      credentials: "include"
     }).then((res) => res.json());
   },
 
   one(id) {
     return fetch(`${baseUrl}/products/${id}`, {
-      credentials: "include",
+      credentials: "include"
     }).then((res) => res.json());
   },
 
@@ -17,10 +17,7 @@ export const Product = {
     return fetch(`${baseUrl}/products`, {
       credentials: "include",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
+      body: params
     }).then((res) => res.json());
   },
 
@@ -28,17 +25,14 @@ export const Product = {
     return fetch(`${baseUrl}/products/${id}`, {
       credentials: "include",
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
+      body: params
     }).then((res) => res.json());
   },
 
   destroy(id) {
     return fetch(`${baseUrl}/products/${id}`, {
       credentials: "include",
-      method: "DELETE",
+      method: "DELETE"
     }).then((res) => res.json());
-  },
+  }
 };

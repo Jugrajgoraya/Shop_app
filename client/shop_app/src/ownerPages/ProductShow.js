@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Button, Modal} from 'semantic-ui-react'
 
 import { ProductDetails } from "./components/ProductDetails";
 import { Product } from "../api/product";
@@ -24,9 +26,18 @@ export class ProductShow extends Component {
     });
   }
   deleteProduct() {
-    this.setState({ product: null });
+    Product.destroy(this.props.match.params.id).then(res =>{
+      this.setState({ product: null, isLoading: true });
+    })
+
   }
 
+  closeModal(){
+    this.setState({
+      product: null,
+      isLoading: false,
+    });
+  }
 
   render() {
     console.log(this.state.product)
@@ -39,12 +50,26 @@ export class ProductShow extends Component {
           <ProductDetails
             {...this.state.product}
           />
-          <button
-            onClick={() => this.deleteProduct()}
-            className="ui right floated huge red button"
-          >
-            Delete
-          </button>
+          <Modal trigger={<Button>Delete </Button>}>
+                <Modal.Header>Delete this Product</Modal.Header>
+                <Modal.Content>
+                <   p>Are you sure you want to delete this product</p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button negative
+                      onClick={() => this.closeModal()} 
+                    > No </Button>
+                    <Button positive
+                      onClick={() => this.deleteProduct()}
+                    > Yes </Button>
+                </Modal.Actions>
+            </Modal>
+          <Link to={`/products/${this.props.match.params.id}/edit`}>
+            <button className="ui right floated huge orange button">
+              Edit
+            </button>
+          </Link>
+
         </div>
       </main>
     );
