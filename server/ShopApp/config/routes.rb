@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
       post "/session", to: "sessions#createCart"
 
+      patch "/session", to: "sessions#updateCart"
+
       # resource :session, only: [:create, :destroy]
 
     end

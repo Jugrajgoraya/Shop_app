@@ -11,7 +11,7 @@ export const ProductNew = props => {
     const { currentTarget } = event;
     const fd = new FormData(currentTarget);
 
-      return Product.create(fd).then(data => {
+    return Product.create(fd).then(data => {
       if (data.errors) {
         setErrors(data.errors);
         console.log("errors: ", errors);

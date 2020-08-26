@@ -13,12 +13,14 @@ export class Cart extends Component {
     };
   }
 
-  removeFromCart(){
-
+  removeFromCart(clicked_item){
+    Session.updateCart(clicked_item).then((cart_items) => {
+       this.setState({ cart_items, isLoading: false });
+    });
   }
 
   componentDidMount() {
-    Session.all().then((cart_items) => {
+    Session.allCartItems().then((cart_items) => {
       this.setState({ cart_items, isLoading: false });
     });
   }
@@ -31,22 +33,26 @@ export class Cart extends Component {
     return (
       <main className="ProductIndex Page">
         <h2 className="ui horizontal divider header">Cart itmes</h2>
-        <ul className="ui list">
-          {this.state.cart_items.map((product) => (
-              <div key={product.id} className="ui raised clearing segment">
-                <h3 className="ui header">
-                  {product.name}
-                </h3>
-                <img src= {product.image} height="100px" width="100px"/>
-                <button
-                  className="ui right floated small orange button"
-                  onClick={() => this.removeFromCart(product.id)}
-                >
-                   Remove
-                </button>
-              </div>
-          ))}
-        </ul>
+        <div className="cartContainer ">
+            <ul className="ui container grid">
+            {this.state.cart_items.map((product) => (
+                <div key={product.id} className="ui raised clearing segment">
+                    <h3 className="ui header row">
+                    {product.name}
+                    </h3>
+                    <img src= {product.image} className="ui mini right floated image"/>
+                    <button
+                    className="ui right floated small orange button"
+                    onClick={() => this.removeFromCart(product)}
+                    >
+                    Remove
+                    </button>
+                </div>
+            ))}
+            </ul>
+        </div>
+        <button className="ui right floated small green button">Add more</button>
+        <button className="ui right floated small orange button">Check Out</button>
       </main>
     );
   }

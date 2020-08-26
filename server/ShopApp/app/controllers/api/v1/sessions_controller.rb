@@ -33,7 +33,12 @@ class Api::V1::SessionsController < ApplicationController
       end
 
       def updateCart
-        
+        cart_items = session[:cart_items]
+        cart_items = cart_items.filter {|item| item != params[:id]}
+        session[:cart_items] = cart_items
+
+        products = Product.where(id: cart_items)
+        render json: products
       end
 
 end

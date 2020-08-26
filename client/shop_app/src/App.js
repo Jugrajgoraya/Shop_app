@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 import { WelcomePage } from "./ownerPages/Welcome";
 import { NavBar } from "./ownerPages/components/Navbar"
 import { ProductIndex } from './ownerPages/ProductIndex'
@@ -12,11 +13,12 @@ import { ProductIndex2 } from './CustomerPages.js/ProductIndex2'
 import { Cart } from './CustomerPages.js/Cart'
 import { ProductShow2 } from './CustomerPages.js/ProductShow2'
 
+import { UserLogin} from './UserLogin'
+
 const user = "customer"
 
 function App() {
-
-
+  
   if(user == "admin"){
     return (
       <BrowserRouter>

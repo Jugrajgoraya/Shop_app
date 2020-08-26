@@ -24,7 +24,18 @@ export const Session = {
     }).then((res) => res.json());
   },
 
-  all(){
+  updateCart(params){
+    return fetch(`${baseUrl}/session`, {
+      credentials: "include",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
+
+  allCartItems(){
     return fetch(`${baseUrl}/session`, {
       credentials: "include"
     }).then((res) => res.json());
