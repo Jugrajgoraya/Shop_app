@@ -6,7 +6,7 @@ import { Product } from "../api/product";
 import { Session } from '../api/session'
 import { Spinner } from "../ownerPages/components/Spinner";
 
-const square = { width: 155, height: 150 }
+// const square = { width: 155, height: 150 }
 
 export class ProductShow2 extends Component {
   constructor(props) {
@@ -18,6 +18,19 @@ export class ProductShow2 extends Component {
       isLoading: true,
     };
   }
+  addInput(product){
+      product.quantity = (Number(product.quantity)+1).toString() 
+      this.setState({
+        product
+      })
+  }
+
+  removeInput(product){
+    product.quantity = (Number(product.quantity)-1).toString() 
+    this.setState({
+      product
+    })
+  }
 
   addToCart(cliked_item){
     Session.createCart(cliked_item).then((data) => {
@@ -28,6 +41,9 @@ export class ProductShow2 extends Component {
 
   componentDidMount() {
     Product.one(this.props.match.params.id).then((product) => {
+      if(!product.quantity){
+        product.quantity = 1
+      }
       this.setState({
         product: product,
         isLoading: false,
@@ -45,23 +61,32 @@ export class ProductShow2 extends Component {
       <main className="ProductShowPage">
         <div className="ui teal clearing segment ">
           <ProductDetails
-            {...this.state.product}
+            product={this.state.product} from="customer"
           />
-          {/* <button
+          <div class="quantity">
+            <button class="plus-btn" type="button" name="button" onClick={()=>this.addInput(this.state.product)}>
+                  +
+            </button>
+            <input type="text" name="name" value={this.state.product.quantity}/>
+            <button class="minus-btn" type="button" name="button" onClick={()=>this.removeInput(this.state.product)}>
+                  -
+            </button>
+          </div>
+          <button
             onClick={() => this.addToCart(this.state.product)}
-            className="ui right floated huge red button"
+            className="ui right floated huge green button"
           >
             Add to Cart
-          </button> */}
+          </button>
 
-        <div>
+        {/* <div>
             <Segment circular inverted style={square} onClick={() => this.addToCart(this.state.product)}>
                 <Header as='h2' inverted>
                     Buy Now
                     <Header.Subheader>$10.99</Header.Subheader>
                 </Header>
             </Segment>
-        </div>
+        </div> */}
         </div>
       </main>
     );

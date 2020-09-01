@@ -27,16 +27,12 @@ export class ProductShow extends Component {
   }
   deleteProduct() {
     Product.destroy(this.props.match.params.id).then(res =>{
-      this.setState({ product: null, isLoading: true });
+      this.props.history.push("/products")
     })
-
   }
 
   closeModal(){
-    this.setState({
-      product: null,
-      isLoading: false,
-    });
+    this.props.history.push("/products")
   }
 
   render() {
@@ -48,9 +44,9 @@ export class ProductShow extends Component {
       <main className="ProductShowPage">
         <div className="ui teal clearing segment ">
           <ProductDetails
-            {...this.state.product}
+            product={this.state.product} from="admin"
           />
-          <Modal trigger={<Button>Delete </Button>}>
+          <Modal trigger={<Button negative className="ui right floated huge button">Delete </Button>}>
                 <Modal.Header>Delete this Product</Modal.Header>
                 <Modal.Content>
                 <   p>Are you sure you want to delete this product</p>

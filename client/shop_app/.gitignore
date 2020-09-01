@@ -21,3 +21,35 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+piblishable key 
+
+pk_test_51HJbAaI898YI46fv9wFBohzJBjRGZyseavYTtxE7954pFnArET4PWV2rkP61ksKWSEPnktPXQQVjoOPC9TvU4dzc00HqoivOm8
+
+secret key 
+
+sk_test_51HJbAaI898YI46fvPcRqav9q9c0JYvfkslHxxc3ORbGvVOuGKlqIFrL06ZawSFjKWFGquyiHKt51N4EZPo36EJ0z00RYWRqofd
+
+
+  const [ products, setProducts] = useState([])
+
+  useEffect(()=>{
+    console.log(products);
+    Product.all().then((products) => {
+        products.map(product=>{
+            product.quantity = 0
+            return product
+        })
+      setProducts({ products, isLoading: false });
+    });
+  },
+  []
+  )
+
+  <Route
+    exact
+    path="/products"
+    render={routeProps => (
+      <ProductIndex2 {...routeProps} products={products} setProducts={setProducts} />
+    )}
+  />

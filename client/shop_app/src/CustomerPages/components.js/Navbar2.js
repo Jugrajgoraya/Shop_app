@@ -13,6 +13,9 @@ export const NavBar2 = (props) => {
         <NavLink exact to="/cart" className="item">
             Cart
         </NavLink>
+        <NavLink exact to="/logIn" className="item">
+            Log In
+        </NavLink>
         </div>
     );
 };

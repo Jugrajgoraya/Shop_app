@@ -22,14 +22,12 @@ export class ProductIndex extends Component {
   }
 
   deleteProduct(id) {
-
-    this.setState((state, props) => {
-      return {
-        products: state.products.filter((q) => q.id !== id),
-      };
-    });
-
+    Product.destroy(id).then(res =>{
+      this.props.history.push("/products")
+      this.setState( {products: this.state.products.filter( product => product.id != id), isLoading:false})
+    })
   }
+
   render() {
     console.log(this.state.products)
     if (this.state.isLoading) {
@@ -38,7 +36,8 @@ export class ProductIndex extends Component {
     return (
       <main className="ProductIndex Page">
         <h2 className="ui horizontal divider header">Products</h2>
-        <ul className="ui list">
+        <ul className="ui grid">
+          <div className="ui three column row">
           {this.state.products.map((product) => (
             <Link to={`/products/${product.id}`} >
               <div key={product.id} className="ui raised clearing segment">
@@ -47,7 +46,7 @@ export class ProductIndex extends Component {
                 </h3>
                 <img src= {product.image} height="100px" width="100px"/>
                 <button
-                  className="ui right floated small red button"
+                  className="ui floated small red button"
                   onClick={() => this.deleteProduct(product.id)}
                 >
                   Delete
@@ -55,6 +54,7 @@ export class ProductIndex extends Component {
               </div>
             </Link>
           ))}
+          </div>
         </ul>
       </main>
     );

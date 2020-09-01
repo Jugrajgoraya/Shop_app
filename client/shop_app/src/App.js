@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { WelcomePage } from "./ownerPages/Welcome";
@@ -8,18 +8,34 @@ import { ProductNew } from './ownerPages/ProductNew'
 import { ProductShow } from './ownerPages/ProductShow'
 import { ProductEdit } from './ownerPages/ProductEdit'
 
-import { NavBar2 } from './CustomerPages.js/components.js/Navbar2'
-import { ProductIndex2 } from './CustomerPages.js/ProductIndex2'
-import { Cart } from './CustomerPages.js/Cart'
-import { ProductShow2 } from './CustomerPages.js/ProductShow2'
+import { NavBar2 } from './CustomerPages/components.js/Navbar2'
+import { ProductIndex2 } from './CustomerPages/ProductIndex2'
+import { Cart } from './CustomerPages/Cart'
+import { ProductShow2 } from './CustomerPages/ProductShow2'
+import { UserLogin } from './UserLogin'
+import { Session } from './api/session'
 
-import { UserLogin} from './UserLogin'
-
-const user = "customer"
 
 function App() {
-  
-  if(user == "admin"){
+
+  const [ user, setUser] = useState({})
+
+  const handlesignIn = event => {
+    event.preventDefault();
+    const { currentTarget } = event;
+    const fd = new FormData(currentTarget);
+    console.log(fd)
+    
+    return (
+        Session.create(fd).then(user=>{
+            console.log(user)
+            setUser(user)
+        })
+    )
+  }
+
+
+  if(user.is_admin){
     return (
       <BrowserRouter>
         <header className="ui header">
@@ -37,7 +53,6 @@ function App() {
     </BrowserRouter>
     );
   }
-  if(user == "customer"){
     return (
       <BrowserRouter>
         <header className="ui header">
@@ -46,6 +61,14 @@ function App() {
         <div className="ui container App">
         <Switch>
             <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/Login" component={UserLogin}/>
+            <Route
+              exact
+              path="/Login"
+              render={routeProps => (
+                <UserLogin {...routeProps} handlesignIn={handlesignIn} />
+              )}
+            />
             <Route exact path="/products" component={ProductIndex2} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/products/:id" component={ProductShow2} />
@@ -53,7 +76,6 @@ function App() {
         </div>
     </BrowserRouter>
     );
-  }
   }
 
 export default App;
