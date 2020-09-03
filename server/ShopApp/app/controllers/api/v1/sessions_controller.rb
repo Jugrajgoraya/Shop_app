@@ -8,9 +8,14 @@ class Api::V1::SessionsController < ApplicationController
           render json: { message: "you failed to log in" }, status: 404
         end
       end
+
+      def current
+        user = User.find(session[:user_id])
+        render json: user
+      end
     
       def destroy
-        session[:user_id] = null;
+        session[:user_id] = nil;
       end
 
       def createCart
@@ -105,5 +110,6 @@ class Api::V1::SessionsController < ApplicationController
         end
         render json:  product_with_quantities
       end
+      
 
 end

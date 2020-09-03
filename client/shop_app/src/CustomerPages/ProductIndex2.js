@@ -67,10 +67,10 @@ export class ProductIndex2 extends Component {
     }
     return (
       <main className="ProductIndex Page">
-        <h2 className="ui horizontal divider header">Products</h2>
-        <ul className="ui ">
+        <h1 className="ui horizontal divider header">Products</h1>
+        <ul className="products">
           {this.state.products.map((product) => (
-              <div key={product.id} className="ui raised clearing segment">
+              <div key={product.id} className="ui raised clearing segment blue">
                 <h3 className="ui header">
                   {product.name}
                 </h3>

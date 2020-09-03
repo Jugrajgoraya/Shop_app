@@ -34,19 +34,24 @@ export class ProductIndex extends Component {
       return <Spinner message="Loading products from DB" />;
     }
     return (
-      <main className="ProductIndex Page">
+      <main className="ProductIndex Page container">
         <h2 className="ui horizontal divider header">Products</h2>
-        <ul className="ui grid">
-          <div className="ui three column row">
+        <ul className="ui list">
+          <div className="">
           {this.state.products.map((product) => (
             <Link to={`/products/${product.id}`} >
               <div key={product.id} className="ui raised clearing segment">
                 <h3 className="ui header">
                   {product.name}
                 </h3>
-                <img src= {product.image} height="100px" width="100px"/>
+                <img src= {product.image} height="100px" width="150px"/>
+                <Link to={`/products/${product.id}/edit`}>
+                  <button className="ui right floated small orange button">
+                    Edit
+                  </button>
+                </Link>
                 <button
-                  className="ui floated small red button"
+                  className="ui right floated small red button"
                   onClick={() => this.deleteProduct(product.id)}
                 >
                   Delete

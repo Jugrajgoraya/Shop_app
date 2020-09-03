@@ -1,8 +1,9 @@
 import { baseUrl } from "./config";
 
 export const Session = {
+
   create(params) {
-    // params: { email: 'email@domain.ext', password: 'strong password' }
+
     return fetch(`${baseUrl}/session`, {
       credentials: "include",
       method: "POST",
@@ -13,10 +14,24 @@ export const Session = {
     }).then((res) => res.json());
   },
 
-  
+  current(){
+    return fetch(`${baseUrl}/session/current`, {
+      method: "GET",
+      credentials: "include",
+    }).then((res) => res.json());
+  },
+
+  destroy(){
+    return fetch(`${baseUrl}/session/destroy`, {
+      credentials: "include",
+      method: "DELETE"
+    }).then();
+  },
+
+  // session sontrollers for Cart
   
   createCart(params){
-    return fetch(`${baseUrl}/session`, {
+    return fetch(`${baseUrl}/session/createCart`, {
       credentials: "include",
       method: "POST",
       headers: {
@@ -27,7 +42,7 @@ export const Session = {
   },
 
   updateCart(params){
-    return fetch(`${baseUrl}/session`, {
+    return fetch(`${baseUrl}/session/updateCart`, {
       credentials: "include",
       method: "PATCH",
       headers: {
@@ -38,7 +53,7 @@ export const Session = {
   },
 
   allCartItems(){
-    return fetch(`${baseUrl}/session`, {
+    return fetch(`${baseUrl}/session/index`, {
       credentials: "include"
     }).then((res) => res.json());
   }

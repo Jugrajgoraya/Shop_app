@@ -53,3 +53,92 @@
   .cartPrice{
       margin-left: 50px;
   }
+
+  /* products index */
+
+  .products{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  /* navbar */
+
+  .navbarMenu{
+    font-weight: 300;
+  }
+
+  /* for bakground image on home */
+  .homeImage{
+      height: 700px;
+      background-image: url(./photos/home.jpg);
+  }
+  .imageText{
+      margin-left: 350px;
+      margin-right: 300px;
+      color: olivedrab;
+      font-size: 7em;
+      font-style: italic;
+      font-weight: 800;
+      border-radius: 20px;
+  }
+
+  .shopNow{
+    margin-left: 450px;
+    margin-right: 300px;
+    margin-top: 150px;
+    font-weight: 800;
+    font-size: 5em;
+    background-color: navajowhite;
+    border-radius: 50px;
+  }
+
+/* login */
+
+.logIn{
+  height: 700px;
+  background-image: url(./photos/signIn.jpg);
+}
+
+.heading{
+  color: beige;
+  margin-left: 500px;
+  font-weight: 800;
+}
+/* for contact section */
+.contact-section {
+    padding: 5rem 0 0;
+  }
+  .contact-section .card {
+    border: 0;
+    border-bottom: 0.25rem solid #64A19D;
+  }
+  .contact-section .card h4 {
+    font-size: 0.8rem;
+    font-family: ‘Varela Round’;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+  }
+  .contact-section .card hr {
+    border-color: #64A19D;
+    border-width: 0.25rem;
+    width: 3rem;
+  }
+  .contact-section .social {
+    margin-top: 5rem;
+  }
+  .contact-section .social a {
+    text-align: center;
+    height: 3rem;
+    width: 3rem;
+    /* background: rgba(255, 255, 255, 0.1); */
+    border-radius: 100%;
+    line-height: 3rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .contact-section .social a:hover {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .contact-section .social a:active {
+    color: #fff;
+  }

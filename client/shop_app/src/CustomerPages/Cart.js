@@ -3,6 +3,8 @@ import '../App.css'
 
 import { Session } from "../api/session";
 import { Spinner } from "../ownerPages/components/Spinner";
+import { Order } from "../api/order";
+import { OrderDetail } from './components.js/OrderDetails'
 
 export class Cart extends Component {
   constructor(props) {
@@ -11,8 +13,10 @@ export class Cart extends Component {
     this.state = {
       cart_items: [],
       subTotal: 0,
+      dataForm: false,
       isLoading: true,
     };
+    this.createOrder = this.createOrder.bind(this)
   }
 
   removeFromCart(clicked_item){
@@ -36,6 +40,26 @@ export class Cart extends Component {
     });
   } 
 
+  createOrder(event){
+    event.preventDefault()
+    console.log(event.currentTarget)
+    const { currentTarget } = event
+    let fd = new FormData( currentTarget )
+
+    Order.create({
+      customer_name: fd.get('customer_name'),
+      email: fd.get('email'),
+      shipping_address: fd.get('shipping_address'),
+      cart_items: this.state.cart_items,
+      subTotal: this.state.subTotal,
+    }).then((data)=>{
+      console.log(data)
+
+      this.props.history.push(`/order/${data.id}`)
+    })
+  }
+  
+
   render() {
     if (this.state.isLoading) {
       return <Spinner message="Loading products from DB" />;
@@ -44,7 +68,7 @@ export class Cart extends Component {
       <main className="ProductIndex Page">
         <h2 className="ui horizontal divider header">Cart itmes</h2>
         <ul className="ui list">
-            {this.state.cart_items.map((product) => (
+            {this.state.cart_items && this.state.cart_items.map((product) => (
                 <div key={product.id} className="ui raised clearing segment">
                     <h3 className="ui header row">
                         {product.name}
@@ -66,7 +90,12 @@ export class Cart extends Component {
           <button className="ui right floated small green button"
             onClick ={()=>this.props.history.push(`/products`)}>Add more
           </button>
-          <button className="ui right floated small orange button">Check Out</button>
+          <button className="ui right floated small orange button" 
+          onClick={()=>{this.setState({dataForm: true})}}
+          >Check Out</button>
+        </div>
+        <div>
+          {this.state.dataForm ? <OrderDetail createOrder={this.createOrder}/> : null}
         </div>
       </main>
     );

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
     def create
-        user = User.new params.require(:user).permit(:name, :email, :password_digest, :billing_address, :default_shipping_address, :phone)
+        user = User.new params.require(:user).permit(:name, :email, :password, :billing_address, :default_shipping_address, :phone)
 
         if user.save
             render(json: { id: user.id })
@@ -34,7 +34,7 @@ class Api::V1::UsersController < ApplicationController
     def update
         id = params[:id]
         user = User.find(id)
-        if user.update(params.require(:user).permit(:name, :email, :password_digest, :billing_address, :default_shipping_address, :phone))
+        if user.update(params.require(:user).permit(:name, :email, :password, :billing_address, :default_shipping_address, :phone))
           render json: user
         else
           render :edit

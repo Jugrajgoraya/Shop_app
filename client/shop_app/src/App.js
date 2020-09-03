@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { WelcomePage } from "./ownerPages/Welcome";
@@ -13,24 +13,29 @@ import { ProductIndex2 } from './CustomerPages/ProductIndex2'
 import { Cart } from './CustomerPages/Cart'
 import { ProductShow2 } from './CustomerPages/ProductShow2'
 import { UserLogin } from './UserLogin'
-import { Session } from './api/session'
+import { OrderShow } from './CustomerPages/components.js/OrderShow'
+import { Session } from './api/session';
 
 
 function App() {
 
-  const [ user, setUser] = useState({})
+  const [ user, setUser ] = useState({})
 
-  const handlesignIn = event => {
-    event.preventDefault();
-    const { currentTarget } = event;
-    const fd = new FormData(currentTarget);
-    console.log(fd)
-    
+  useEffect(()=>{
+    Session.current().then((usert)=>{
+      console.log(usert)
+      setUser(usert);
+      console.log(user)
+    })
+  },
+  []
+  );
+
+  const handleLogOut = () => {
     return (
-        Session.create(fd).then(user=>{
-            console.log(user)
-            setUser(user)
-        })
+      Session.destroy().then(
+        setUser({})
+      )
     )
   }
 
@@ -39,9 +44,9 @@ function App() {
     return (
       <BrowserRouter>
         <header className="ui header">
-          <NavBar />
+          <NavBar handleLogOut={handleLogOut}/>
         </header>
-        <div className="ui container App">
+        <div className="ui App">
         <Switch>
             <Route exact path="/" component={WelcomePage} />
             <Route exact path="/products" component={ProductIndex} />
@@ -58,15 +63,16 @@ function App() {
         <header className="ui header">
           <NavBar2 />
         </header>
-        <div className="ui container App">
+        <div className="ui App">
         <Switch>
             <Route exact path="/" component={WelcomePage} />
             <Route exact path="/Login" component={UserLogin}/>
+            <Route exact path="/order/:id" component={OrderShow}/>
             <Route
               exact
               path="/Login"
               render={routeProps => (
-                <UserLogin {...routeProps} handlesignIn={handlesignIn} />
+                <UserLogin {...routeProps}/>
               )}
             />
             <Route exact path="/products" component={ProductIndex2} />
